@@ -1,11 +1,17 @@
 name: Greetings2
 
 on:
-  workflow_dispatch:
-    branches:
-      - main
+  workflow_dispatch
 
 jobs:
+  validate-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check branch
+        if: github.ref != 'refs/heads/main'
+        run: |
+          echo "This workflow can only be run on the main branch"
+          exit 1
   greeting:
     runs-on: ubuntu-latest
     permissions:
